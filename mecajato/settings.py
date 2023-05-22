@@ -36,7 +36,9 @@ ROOT_URLCONF = 'mecajato.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -89,7 +91,7 @@ USE_TZ = True
 
 
 STATIC_URL = 'static/'
-STATICFILESDIRS = BASE_DIR / 'templates/static'
+STATICFILES_DIRS = [BASE_DIR / 'templates/static/']
 STATIC_ROOT = 'static'
 
 MEDIA_ROOT = BASE_DIR / 'media'
