@@ -11,24 +11,21 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md card-dashboard">
+        <div onclick="exibir_form('1')" class="col-md card-dashboard">
             <p class="text-card">Adicionar clientes</p>
         </div>
-        <div class="col-md card-dashboard">
+        <div onclick="exibir_form('2')" class="col-md card-dashboard">
             <p class="text-card">Atualizar clientes</p>
         </div>
     </div>
 
-    <div class="adicionar-cliente">
+    <div id="adicionar-cliente" class="adicionar-cliente">
         <form action="{% url 'clientes' %}" method="POST">{% csrf_token %}
-            <div class="col-md">
-                <p>Nome:</p>
-                <input type="text" class="form-control" placeholder="Primeiro nome" name="nome" value="{{name}}">
-            </div>
-            <div class="col-md">
-                <p>Sobrenome:</p>
-                <input type="text" class="form-control" placeholder="Sobrenome" name="sobrenome" value="{{sobrenome}}">
-            </div>
+            <br><p>Nome:</p>
+            <input type="text" class="form-control" placeholder="Primeiro nome" name="nome" value="{{name}}">
+            <br>
+            <p>Sobrenome:</p>
+            <input type="text" class="form-control" placeholder="Sobrenome" name="sobrenome" value="{{sobrenome}}">
             <br>
             <p>E-mail:</p>
             <input type="email" class="form-control" placeholder="nome@email.com" name="email" value="{{email}}">
@@ -42,18 +39,18 @@
 
                 <div id="form-carro">
                     {% for carro, placa, ano in carros %}
-                        <br>
-                        <div class='row'>
-                            <div class="col-md">
-                                <input type='text'placeholder='carro' class='form-control' name='carros' value="{{carro}}">
-                            </div>
-                            <div class="col-md">
-                                <input type='text'placeholder='placa' class='form-control' name='placas' value="{{carro}}">
-                            </div>
-                            <div class="col-md">
-                                <input type='number'placeholder='ano' class='form-control' name='anos' value="{{carro}}">
-                            </div>
+                    <br>
+                    <div class='row'>
+                        <div class="col-md">
+                            <input type='text' placeholder='carro' class='form-control' name='carros' value="{{carro}}">
                         </div>
+                        <div class="col-md">
+                            <input type='text' placeholder='placa' class='form-control' name='placas' value="{{carro}}">
+                        </div>
+                        <div class="col-md">
+                            <input type='number' placeholder='ano' class='form-control' name='anos' value="{{carro}}">
+                        </div>
+                    </div>
                     {% endfor %}
                 </div>
 
@@ -63,7 +60,31 @@
             <input type="submit" value="Cadastrar" class="btn-principal">
 
         </form>
+    </div>
 
+    <div id="atualizar-cliente">
+        <p></p>
+        <select id="cliente-select" onchange="dados_cliente()" class="form-control">
+            {% for cliente in clientes %}
+            <option value="{{cliente.id}}">{{cliente.nome}}</option>
+            {%endfor%}
+        </select>
+        <br>
+        <hr>
+
+        <div id="form-att-cliente">
+            <form action="{% url 'atualiza_cliente'%} method='POST'">{% csrf_token %}
+                <p>Nome: </p>
+                <input id='nome' type="text" class="form-control" value={{request.POST.nome}}><br>
+                <p>Sobrenome: </p>
+                <input id='sobrenome' type="text" class="form-control"><br>
+                <p>Email: </p>
+                <input id='email' type="text" class="form-control"><br>
+                <p>CPF: </p>
+                <input id='cpf' type="text" class="form-control"><br>
+                <input type="submit" value="Atualizar" class="btn-principal">
+            </form>
+        </div>
     </div>
 </div>
 

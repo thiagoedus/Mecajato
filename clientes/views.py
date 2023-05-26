@@ -1,13 +1,17 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from .models import Cliente, Carro
 import re
+from django.core import serializers
+import json
 
 def home(request):
     if request.method == 'GET':
-        return render(request, 'clientes/clientes.html')
+        clientes_list = Cliente.objects.all()
+        return render(request, 'clientes/clientes.html', {'clientes': clientes_list})
+    
     elif request.method == 'POST':
-        name = request.POST.get("nome")
+        nome = request.POST.get("nome")
         sobrenome = request.POST.get("sobrenome")
         email = request.POST.get("email")
         cpf = request.POST.get("cpf")
@@ -18,13 +22,13 @@ def home(request):
         cliente = Cliente.objects.filter(cpf=cpf)
 
         if cliente.exists():
-            return render(request, 'clientes/clientes.html', {'nome': name, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})
+            return render(request, 'clientes/clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'email': email, 'carros': zip(carros, placas, anos)})
         
         if not re.fullmatch(re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+'), email):
-            return render(request, 'clientes/clientes.html', {'nome': name, 'sobrenome': sobrenome, 'cpf': cpf, 'carros': zip(carros, placas, anos)})
+            return render(request, 'clientes/clientes.html', {'nome': nome, 'sobrenome': sobrenome, 'cpf': cpf, 'carros': zip(carros, placas, anos)})
 
         cliente=Cliente(
-            nome = name,
+            nome = nome,
             sobrenome = sobrenome,
             email = email,
             cpf = cpf
@@ -38,3 +42,11 @@ def home(request):
 
 
         return HttpResponse('teste')
+    
+
+def att_cliente(request):
+    id_cliente = request.POST.get('id_cliente')
+    cliente = Cliente.objects.filter(id=id_cliente)
+    cliente_json = json.loads(serializers.serialize('json', cliente))[0]['fields']
+    print(cliente_json)
+    return JsonResponse(cliente_json)
