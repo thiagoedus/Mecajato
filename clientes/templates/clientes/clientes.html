@@ -38,20 +38,7 @@
                 <span class="btn-add-carros" onclick="add_carro()">+ Adicionar um carro</span>
 
                 <div id="form-carro">
-                    {% for carro, placa, ano in carros %}
-                    <br>
-                    <div class='row'>
-                        <div class="col-md">
-                            <input type='text' placeholder='carro' class='form-control' name='carros' value="{{carro}}">
-                        </div>
-                        <div class="col-md">
-                            <input type='text' placeholder='placa' class='form-control' name='placas' value="{{carro}}">
-                        </div>
-                        <div class="col-md">
-                            <input type='number' placeholder='ano' class='form-control' name='anos' value="{{carro}}">
-                        </div>
-                    </div>
-                    {% endfor %}
+                    
                 </div>
 
             </div>
@@ -62,9 +49,10 @@
         </form>
     </div>
 
-    <div id="atualizar-cliente">
+    <div id="atualizar-cliente" style='display:none'>
         <p></p>
         <select id="cliente-select" onchange="dados_cliente()" class="form-control">
+            <option value=""></option>
             {% for cliente in clientes %}
             <option value="{{cliente.id}}">{{cliente.nome}}</option>
             {%endfor%}
@@ -75,18 +63,17 @@
         <div id="form-att-cliente">
             <form action="{% url 'atualiza_cliente'%} method='POST'">{% csrf_token %}
                 <p>Nome: </p>
-                <input id='nome' type="text" class="form-control" value={{request.POST.nome}}><br>
+                <input id='nome' type="text" class="form-control"><br>
                 <p>Sobrenome: </p>
                 <input id='sobrenome' type="text" class="form-control"><br>
                 <p>Email: </p>
                 <input id='email' type="text" class="form-control"><br>
                 <p>CPF: </p>
                 <input id='cpf' type="text" class="form-control"><br>
-                <div class="" id="add-carro"></div>
-                <input type="submit" value="Atualizar" class="btn-principal">
-
-
             </form>
+            <div id="altera-carro"></div>
+                
+
         </div>
     </div>
 </div>

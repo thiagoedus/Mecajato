@@ -1,9 +1,13 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from .models import Cliente, Carro
-import re
-from django.core import serializers
 import json
+import re
+
+from django.core import serializers
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import redirect, render, reverse
+from django.views.decorators.csrf import csrf_exempt
+
+from .models import Carro, Cliente
+
 
 def home(request):
     if request.method == 'GET':
@@ -53,6 +57,32 @@ def att_cliente(request):
     carros_json = json.loads(serializers.serialize('json', carros))
     carros_json = [{'fields': carro['fields'], 'id': carro['pk']} for carro in carros_json]
     data = {'cliente': cliente_json, 'carros': carros_json}
-    print(data)
 
     return JsonResponse(data)
+
+@csrf_exempt
+def update_carro(request, id):
+    nome_carro = request.POST.get("carros")
+    placa = request.POST.get("placas")
+    ano = request.POST.get("anos")
+
+    carro = Carro.objects.get(id=id)
+    list_placas = Carro.objects.filter(placa=placa).exclude(id=id)
+    if list_placas.exists():
+        return HttpResponse("Placa já existe")
+    carro.carro = nome_carro
+    carro.placa = placa
+    carro.ano = ano
+    carro.save()    
+    
+
+    return HttpResponse('Deu certo')
+
+
+def excluir_carro(request, id):
+    try:
+        carro = Carro.objects.get(id=id)
+        carro.delete()
+        return redirect(reverse('clientes')+f'aba=atualiza_cliente&id_cliente={id}')
+    except:
+        return redirect(reverse('clientes'))

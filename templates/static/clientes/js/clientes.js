@@ -56,17 +56,10 @@ function dados_cliente(){
         email.value = data['cliente']['email']
 
         carros = data['carros']
-
+        var add_carro_html = document.querySelector('#altera-carro')
+        add_carro_html.innerHTML = ''
         for (var i = 0; i < carros.length; i++) {
-            var add_carro_html = document.querySelector('#add-carro')
-            add_carro_html.innerHTML = "<br> <div class='row'> <div class='cold-md'> <input type='text'placeholder='carro' class='form-control' name='carros'> </div> <div class='col-md'> <input type='text' placeholder='Placa' class='form-control' name='placas'> </div> <div class='col-md'> <input type='number' placeholder='ano' class='form-control' name='anos'> </div> </div >"
-            console.log(carros[i]['fields']['carro'])
-            carros = document.querySelector('#carros')
-            carros.value = carros[i]['fields']['carro']
-            placas = document.querySelector('#placas')
-            anos = document.querySelector('#anos')
+            add_carro_html.innerHTML += "<br> <form method='POST' action='/clientes/update_carro/"+carros[i]['id']+"'> <div class='row'> <div class='cold-md'> <input type='text'placeholder='carro' class='form-control' name='carros' value='"+carros[i]['fields']['carro']+"'> </div> <div class='col-md'> <input type='text' placeholder='Placa' class='form-control' name='placas' value='"+carros[i]['fields']['placa']+"'> </div> <div class='col-md'> <input type='number' placeholder='ano' class='form-control' name='anos' value='"+carros[i]['fields']['ano']+"'> </div> <input type='submit' value'Salvar'> </form> <a href='/clientes/excluir_carro/"+carros[i]['id']+"' >Excluir</a></div >"
         }
-
-        
     })
 }
