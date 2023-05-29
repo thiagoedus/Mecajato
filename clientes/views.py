@@ -2,8 +2,8 @@ import json
 import re
 
 from django.core import serializers
-from django.http import HttpResponse, JsonResponse, Http404
-from django.shortcuts import redirect, render, reverse, get_object_or_404
+from django.http import Http404, HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect, render, reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import Carro, Cliente
@@ -11,8 +11,7 @@ from .models import Carro, Cliente
 
 def home(request):
     if request.method == 'GET':
-        clientes_list = Cliente.objects.all()
-        return render(request, 'clientes/clientes.html', {'clientes': clientes_list})
+        return render(request, 'clientes/clientes.html')
     
     elif request.method == 'POST':
         nome = request.POST.get("nome")
@@ -47,6 +46,10 @@ def home(request):
 
         return HttpResponse('teste')
     
+
+def att_cliente_id(request):
+    clientes_list = Cliente.objects.all()
+    return render(request, 'clientes/atualiza_cliente.html', {'clientes': clientes_list})
 
 def att_cliente(request):
     id_cliente = request.POST.get('id_cliente')

@@ -16,6 +16,15 @@
 
 }
 
+.text-card a{
+    text-decoration: none;
+    color: white;
+}
+
+.text-card a:hover{
+    text-decoration: none;
+}
+
 .btn-add-carros{
 
     background-color: var(--contrast-color);
@@ -31,12 +40,4 @@
     background-color: var(--dark-color);
     padding: 5px;
     font-size: 30px;
-}
-
-#atualizar_cliente {
-    display: none;
-}
-
-#form-att-cliente {
-    display: none;
 }

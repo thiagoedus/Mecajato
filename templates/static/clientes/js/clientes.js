@@ -40,9 +40,9 @@ function dados_cliente(){
     }).then(function(result){
         return result.json()
     }).then(function(data){
+        console.log(data)
         mostrar_att_cliente = document.querySelector('#form-att-cliente')
         mostrar_att_cliente.style.display = 'block'
-
         nome = document.querySelector('#nome')
         nome.value = data['cliente']['nome']
 
