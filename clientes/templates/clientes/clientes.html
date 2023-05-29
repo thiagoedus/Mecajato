@@ -50,6 +50,8 @@
     </div>
 
     <div id="atualizar-cliente" style='display:none'>
+        <br>
+        <div id="alerta-cliente" style='display:none'></div>
         <p></p>
         <select id="cliente-select" onchange="dados_cliente()" class="form-control">
             <option value=""></option>
@@ -61,7 +63,7 @@
         <hr>
 
         <div id="form-att-cliente">
-            <form action="{% url 'atualiza_cliente'%} method='POST'">{% csrf_token %}
+                <input type="hidden" id='id'>
                 <p>Nome: </p>
                 <input id='nome' type="text" class="form-control"><br>
                 <p>Sobrenome: </p>
@@ -70,9 +72,8 @@
                 <input id='email' type="text" class="form-control"><br>
                 <p>CPF: </p>
                 <input id='cpf' type="text" class="form-control"><br>
-            </form>
-            <div id="altera-carro"></div>
-                
+                <button type="submit" class='btn btn-success' onclick='update_cliente()'>Salvar</button>
+                <div id="altera-carro"></div>
 
         </div>
     </div>

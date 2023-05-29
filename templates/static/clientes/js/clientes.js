@@ -59,7 +59,70 @@ function dados_cliente(){
         var add_carro_html = document.querySelector('#altera-carro')
         add_carro_html.innerHTML = ''
         for (var i = 0; i < carros.length; i++) {
-            add_carro_html.innerHTML += "<br> <form method='POST' action='/clientes/update_carro/"+carros[i]['id']+"'> <div class='row'> <div class='cold-md'> <input type='text'placeholder='carro' class='form-control' name='carros' value='"+carros[i]['fields']['carro']+"'> </div> <div class='col-md'> <input type='text' placeholder='Placa' class='form-control' name='placas' value='"+carros[i]['fields']['placa']+"'> </div> <div class='col-md'> <input type='number' placeholder='ano' class='form-control' name='anos' value='"+carros[i]['fields']['ano']+"'> </div> <input type='submit' value'Salvar'> </form> <a href='/clientes/excluir_carro/"+carros[i]['id']+"' >Excluir</a></div >"
+            add_carro_html.innerHTML += "<br>\
+            <form method='POST' action='/clientes/update_carro/"+carros[i]['id']+"'>\
+                <div class='row'>\
+                    <div class='cold-md'>\
+                        <input type='text'placeholder='carro' class='form-control' name='carros' value='"+carros[i]['fields']['carro']+"'>\
+                    </div>\
+                    <div class='col-md'>\
+                        <input type='text' placeholder='Placa' class='form-control' name='placas' value='"+carros[i]['fields']['placa']+"'>\
+                    </div>\
+                    <div class='col-md'>\
+                        <input type='number' placeholder='ano' class='form-control' name='anos' value='"+carros[i]['fields']['ano']+"'>\
+                    </div>\
+                    <div class='col-md'>\
+                        <input class='btn btn-success' type='submit' value'Submeter pedido'>\
+                    </div>\
+                    <div class='col-md'>\
+                        <a class='btn btn-danger' href='/clientes/excluir_carro/"+carros[i]['id']+"' >Excluir</a>\
+                    </div>\
+                </div >\
+            </form>"
+        }
+    })
+}
+
+function update_cliente() {
+    nome = document.querySelector('#nome').value
+    sobrenome = document.querySelector('#sobrenome').value
+    email = document.querySelector('#email').value
+    cpf = document.querySelector('#cpf').value
+    id = document.querySelector('#cliente-select').value
+
+    fetch('/clientes/update_cliente/'+id, {
+        method : 'POST',
+        headers: {
+            'X-CSRFToken': csrf_token,
+        },
+        body: JSON.stringify({
+            nome: nome,
+            sobrenome : sobrenome,
+            email : email,
+            cpf : cpf,
+        })
+    }
+    ).then(function(result){
+        return result.json()
+    }).then(function(data){
+        var alerta_tela = document.querySelector('#alerta-cliente')
+        if (data['status'] == '200') {
+            nome = data['nome']
+            sobrenome = data['sobrenome']
+            email = data['email']
+            cpf = data['cpf']
+            alerta_tela.innerHTML = "\
+            <div class='alert alert-success' role='alert'>\
+                Dados alterados com sucesso!\
+            </div>"
+            alerta_tela.style.display = 'block'
+        } else {
+            alerta_tela.innerHTML = "\
+            <div class='alert alert-danger' role='alert'>\
+                Algo seu errado, verifique os campos e tente novamente!\
+            </div>"
+            alerta_tela.style.display = 'block'
+
         }
     })
 }
