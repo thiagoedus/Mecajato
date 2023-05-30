@@ -7,21 +7,6 @@ function add_carro() {
     container.innerHTML += html
 }
 
-function exibir_form(tipo) {
-
-    add_cliente = document.getElementById('adicionar-cliente')
-    att_cliente = document.getElementById('atualizar-cliente')
-
-    if (tipo == '1') {
-        att_cliente.style.display = "none"
-        add_cliente.style.display = "block"
-    }
-    else if (tipo == '2') {
-        add_cliente.style.display = "none"
-        att_cliente.style.display = "block"
-    }
-}
-
 function dados_cliente(){
     cliente = document.getElementById('cliente-select')
     csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value
@@ -40,7 +25,6 @@ function dados_cliente(){
     }).then(function(result){
         return result.json()
     }).then(function(data){
-        console.log(data)
         mostrar_att_cliente = document.querySelector('#form-att-cliente')
         mostrar_att_cliente.style.display = 'block'
         nome = document.querySelector('#nome')

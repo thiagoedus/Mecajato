@@ -73,23 +73,23 @@ def update_carro(request, id):
     carro = Carro.objects.get(id=id)
     list_placas = Carro.objects.filter(placa=placa).exclude(id=id)
     if list_placas.exists():
-        return HttpResponse("Placa já existe")
+        return {'status': '500'}
     carro.carro = nome_carro
     carro.placa = placa
     carro.ano = ano
     carro.save()    
     
 
-    return redirect(reverse('clientes')+f'?aba=atualiza_cliente&id_cliente={carro.cliente_id}')
+    return redirect('/clientes/atualiza_cliente_id')
 
 
 def excluir_carro(request, id):
     try:
         carro = Carro.objects.get(id=id)
         carro.delete()
-        return redirect(reverse('clientes')+f'?aba=atualiza_cliente&id_cliente={id}')
+        return redirect(reverse('atualiza_clientes_id')+f'?aba=atualiza_cliente_id&id_cliente={id}')
     except:
-        return redirect(reverse('clientes'))
+        return redirect(reverse('atualiza_clientes_id'))
     
 def update_cliente(request, id):
     body = json.loads(request.body)

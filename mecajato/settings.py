@@ -12,14 +12,15 @@ ALLOWED_HOSTS = []
 
 
 INSTALLED_APPS = [
-    'servicos',
-    'clientes',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # My apps
+    'servicos',
+    'clientes',
 ]
 
 MIDDLEWARE = [

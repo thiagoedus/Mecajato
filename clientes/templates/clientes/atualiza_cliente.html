@@ -32,7 +32,7 @@
         <br>
         <hr>
 
-        <div id="form-att-cliente" style='display:none'>
+        <div id="form-att-cliente" style='display:none'>{% csrf_token %}
                 <input type="hidden" id='id'>
                 <p>Nome: </p>
                 <input id='nome' type="text" class="form-control"><br>
