@@ -9,7 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import Carro, Cliente
 
 
-def home(request):
+def adiciona_cliente(request):
     if request.method == 'GET':
         return render(request, 'clientes/clientes.html')
     
@@ -44,7 +44,7 @@ def home(request):
             carro.save()
 
 
-        return HttpResponse('teste')
+        return redirect('/clientes/atualiza_cliente_id/')
     
 
 def att_cliente_id(request):
@@ -92,12 +92,12 @@ def excluir_carro(request, id):
         return redirect(reverse('atualiza_clientes_id'))
     
 def update_cliente(request, id):
-    body = json.loads(request.body)
+    dados_cliente = Cliente.objects.get(id=id)
 
-    nome = body['nome']
-    sobrenome = body['sobrenome']
-    email = body['email']
-    cpf = body['cpf']
+    nome = dados_cliente.nome
+    sobrenome = dados_cliente.sobrenome
+    email = dados_cliente.email
+    cpf = dados_cliente.cpf
 
     list_cpf = Cliente.objects.filter(cpf=cpf).exclude(id=id)
     if list_cpf.exists():

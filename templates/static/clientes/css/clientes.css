@@ -41,3 +41,16 @@
     padding: 5px;
     font-size: 30px;
 }
+
+.table-cliente{
+    max-width: 500px;
+}
+
+.btn-add-cliente {
+    background-color: green;
+    color: #FFFFFF;
+    border-radius: 20px;
+    padding: 10px;
+    margin-left: 20px;
+
+}

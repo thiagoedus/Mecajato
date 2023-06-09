@@ -4,49 +4,55 @@
 {% block 'head' %}
 
 <link rel="stylesheet" href="{% static 'clientes/css/clientes.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/fontawesome.min.css" integrity="sha512-SgaqKKxJDQ/tAUAAXzvxZz33rmn7leYDYfBP+YoMRSENhf3zJyx3SBASt/OfeQwBHA1nxMis7mM3EV/oYT6Fdw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css" integrity="sha512-9YHSK59/rjvhtDcY/b+4rdnl0V4LPDWdkKceBl8ZLF5TB6745ml1AfluEU6dFWqwDw9lPvnauxFgpKvJqp7jiQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/solid.min.css" integrity="sha512-yDUXOUWwbHH4ggxueDnC5vJv4tmfySpVdIcN1LksGZi8W8EVZv4uKGrQc0pVf66zS7LDhFJM7Zdeow1sw1/8Jw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 {% endblock %}
 
 {% block 'dashboard' %}
 
 <div class="container">
-    <div class="row">
-        <div class="col-md card-dashboard">
-            <a href='{% url "clientes"%}' class="text-card">Adicionar clientes</a>
+    <br><br><br>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Nome do usuário" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button">Button</button>
         </div>
-        <div class="col-md card-dashboard">
-            <a href='{% url "atualiza_cliente_id"%}' class="text-card">Atualizar clientes</a>
-        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="container">
+      <a class="btn-add-cliente" href="{% url 'adiciona_cliente' %}">ADICIONAR CLIENTE <i class="fa-solid fa-plus" style="color: #ffffff;"></i> </a><br><br><br>
+    </div>
+    
+    <div class="container">
+      <table class="table table-dark">
+          <thead>
+            <tr>
+              <th scope="col">Nome</th>
+              <th scope="col">Sobrenome</th>
+              <th scope="col">Email</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for cliente in clientes %}
+            <tr>
+              <th scope="row">{{cliente.nome}}</th>
+              <td>{{cliente.sobrenome}}</td>
+              <td>{{cliente.email}}</td>
+              <td>
+                  <a href="{% url 'atualiza_cliente_cadastrado' cliente.id %}"><i class="fa-solid fa-pen-to-square" style="color: #04ff00;"></i></a>
+                  <a href=""><i class="fa-solid fa-trash" style="color: #ff0000; padding-left: 20px;"></i></a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
 
-    <div id="atualizar-cliente">
-        <br>
-        <div id="alerta-cliente" style='display:none'></div>
-        <p></p>
-        <select id="cliente-select" onchange="dados_cliente()" class="form-control">
-            <option value=""></option>
-            {% for cliente in clientes %}
-            <option value="{{cliente.id}}">{{cliente.nome}}</option>
-            {%endfor%}
-        </select>
-        <br>
-        <hr>
-
-        <div id="form-att-cliente" style='display:none'>{% csrf_token %}
-                <input type="hidden" id='id'>
-                <p>Nome: </p>
-                <input id='nome' type="text" class="form-control"><br>
-                <p>Sobrenome: </p>
-                <input id='sobrenome' type="text" class="form-control"><br>
-                <p>Email: </p>
-                <input id='email' type="text" class="form-control"><br>
-                <p>CPF: </p>
-                <input id='cpf' type="text" class="form-control"><br>
-                <button type="submit" class='btn btn-success' onclick='update_cliente()'>Salvar</button>
-                <div id="altera-carro"></div>
-
-        </div>
-    </div>
 </div>
 
 <script src="{% static 'clientes/js/clientes.js' %}"></script>

@@ -17,3 +17,6 @@ class Carro(models.Model):
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     lavagens = models.IntegerField(default=0)
     consertos = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.carro

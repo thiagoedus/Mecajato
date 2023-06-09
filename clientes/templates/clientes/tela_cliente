@@ -13,7 +13,7 @@
     <br><br>
     <h1>Cadastrar Clientes</h1>
 
-    <div id="adicionar-cliente" class="adicionar-cliente">
+    <div id="adicionar-cliente" class="adicionar-cliente" onchange="dados_cliente()">
         <form action="{% url 'clientes' %}" method="POST">{% csrf_token %}
             <br><p>Nome:</p>
             <input type="text" class="form-control" placeholder="Primeiro nome" name="nome" value="{{name}}">
